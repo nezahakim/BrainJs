@@ -7,6 +7,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "brain.js": "^2.0.0"
+    "brain.js": "^1.1.2"
   }
 }
