@@ -2,11 +2,11 @@
   "name": "brainjs-ai",
   "version": "1.0.0",
   "description": "A Brain.js AI project for natural language processing.",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "brain.js": "^3.0.0"  // Adjust the version as needed
+    "brain.js": "^3.0.0"
   }
 }
