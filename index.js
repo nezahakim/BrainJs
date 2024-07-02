@@ -8,7 +8,7 @@ const net = new brain.recurrent.LSTM();
 const trainingData = [
   { input: "hello", output: "hi there" },
   { input: "how are you", output: "I am fine, thank you" },
-  { input: "what is your name", output: "I am an intelligent AI" },
+  { input: "what is your name", output: "I am an intelligent AI, go by the name of NezaAI." },
   { input: "tell me a joke", output: "Why don't scientists trust atoms? Because they make up everything!" },
   { input: "goodbye", output: "see you later" },
   // Add more varied conversational data
@@ -62,7 +62,7 @@ net.fromJSON(JSON.parse(savedJson));
 const extendedTrainingData = [
   { input: "hello", output: "hi there" },
   { input: "how are you", output: "I am fine, thank you" },
-  { input: "what is your name", output: "I am an intelligent AI" },
+  { input: "what is your name", output: "I am an intelligent AI, go by the name of NezaAI." },
   { input: "tell me a joke", output: "Why don't scientists trust atoms? Because they make up everything!" },
   { input: "goodbye", output: "see you later" },
   { input: "what is the weather like", output: "I can't check the weather, but you can look outside!" },

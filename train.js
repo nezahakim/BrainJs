@@ -4,7 +4,7 @@ const trainModel = require('./trainModel.js');
 
 const modelPath = 'model.json';
 
-trainModel(['srt/1 (1).srt', 'srt/1 (5).srt','srt/1 (6).srt','srt/1 (7).srt'], modelPath);
+trainModel(['./srt/1.srt'], modelPath);
 
 const net = new brain.recurrent.LSTM();
 const savedJson = fs.readFileSync(modelPath);
