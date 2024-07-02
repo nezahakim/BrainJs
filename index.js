@@ -1,5 +1,4 @@
 const brain = require('brain.js');
-const http = require('http');
 const fs = require('fs');
 
 // Create a new instance of a neural network with LSTM
@@ -22,27 +21,51 @@ net.train(trainingData, {
   logPeriod: 100
 });
 
-// HTTP server example to handle requests
-const server = http.createServer((req, res) => {
-  if (req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString(); // Assuming input data is in JSON format
-    });
-    req.on('end', () => {
-      const inputData = JSON.parse(body);
-      const outputData = net.run(inputData.text); // Example: assuming input is {"text": "hello"}
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ response: outputData }));
-    });
-  } else {
-    res.writeHead(404);
-    res.end();
-  }
-});
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Function to generate a response with some creativity
+function generateResponse(input) {
+  let output = net.run(input);
   
+  // Add some creativity: If the input is unknown, generate a random response
+  if (!output) {
+    const randomResponses = [
+      "That's interesting, tell me more!",
+      "I don't quite understand, can you elaborate?",
+      "Hmmm, I'm not sure about that.",
+      "That's a new one for me!",
+      "Can you rephrase that?"
+    ];
+    output = randomResponses[Math.floor(Math.random() * randomResponses.length)];
+  }
+
+  console.log(`Input: ${input}`);
+  console.log(`Output: ${output}`);
+  return output;
+}
+
+// Example usage
+generateResponse("hello");
+generateResponse("how are you");
+generateResponse("what is your name");
+generateResponse("tell me a joke");
+generateResponse("goodbye");
+generateResponse("unknown question");
+
+// Save the model
+const json = net.toJSON();
+fs.writeFileSync('model.json', JSON.stringify(json));
+
+// Load the model
+const savedJson = fs.readFileSync('model.json');
+net.fromJSON(JSON.parse(savedJson));
+
+// Adding more training data later
+const extendedTrainingData = [
+  { input: "hello", output: "hi there" },
+  { input: "how are you", output: "I am fine, thank you" },
+  { input: "what is your name", output: "I am an intelligent AI" },
+  { input: "tell me a joke", output: "Why don't scientists trust atoms? Because they make up everything!" },
+  { input: "goodbye", output: "see you later" },
+  { input: "what is the weather like", output: "I can't check the weather, but you can look outside!" },
+  { input: "do you like music", output: "I don't listen to music, but I can recommend some songs!" },
+  // Add more varied conversational data
+];

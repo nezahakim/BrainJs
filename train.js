@@ -1,19 +1,15 @@
 const brain = require('brain.js');
 const fs = require('fs');
-const trainModel = require('./trainModel');
+const trainModel = require('./trainModel.js');
 
-// Path to save the trained model
 const modelPath = 'model.json';
 
-// Train the model (you can comment this line if you don't want to retrain every time)
 trainModel(['srt/1 (1).srt', 'srt/1 (5).srt','srt/1 (6).srt','srt/1 (7).srt'], modelPath);
 
-// Load the trained model
 const net = new brain.recurrent.LSTM();
 const savedJson = fs.readFileSync(modelPath);
 net.fromJSON(JSON.parse(savedJson));
 
-// Function to generate a response with some creativity
 function generateResponse(input) {
   let output = net.run(input);
   
