@@ -7,6 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "brain.js": "^1.1.2"
+    "brain.js": "^1.1.2",
+    "srt-parser-2": "^1.2.3"
   }
 }
