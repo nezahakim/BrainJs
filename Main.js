@@ -5,30 +5,45 @@ const fs = require('fs');
 const net = new brain.recurrent.LSTM();
 
 // Prepare more diverse training data
-const trainingData = [
-  { input: "hello", output: "hi there" },
-  { input: "how are you", output: "I am fine, thank you" },
-  { input: "what is your name", output: "I am an intelligent AI" },
-  { input: "tell me a joke", output: "Why don't scientists trust atoms? Because they make up everything!" },
-  { input: "goodbye", output: "see you later" },
-  // Add more varied conversational data
-];
+// const trainingData = [
+//   { input: "hello", output: "hi there" },
+//   { input: "how are you", output: "I am fine, thank you" },
+//   { input: "what is your name", output: "I am an intelligent AI" },
+//   { input: "tell me a joke", output: "Why don't scientists trust atoms? Because they make up everything!" },
+//   { input: "goodbye", output: "see you later" },
+//   // Add more varied conversational data
+// ];
 
-const Data = () =>{
+const trainingData = () => {
+  const fileContent = fs.readFileSync('./dataset.txt', 'utf-8');
+  let lines = fileContent.split(/,\s*(?=\n)/); // Split by comma followed by newline
 
+  lines = lines.map(line => line.trim().replace(/^"|"$/g, '').replace(/\\r|\\n/g, '')); // Trim and remove enclosing quotes and newlines
 
-  const file = fs.readFileSync('./dataset.txt').split(",");
-  let trainD = []
-  var obj = {}
-    for(var i = 0; i < file.length; i++){
-      {input: file[i], output: file[i+1]}
+  // Remove the trailing comma from the last entry if it exists
+  if (lines[lines.length - 1].endsWith(',')) {
+    lines[lines.length - 1] = lines[lines.length - 1].slice(0, -1);
+  }
+
+  let trainData = [];
+  
+  for (let i = 0; i < lines.length; i += 2) {
+    if (i + 1 < lines.length) {
+      trainData.push({
+        input: lines[i],
+        output: lines[i + 1]
+      });
     }
+  }
 
-
+  return trainData;
 }
+// console.log(trainingData())
+
+let Tdata = trainingData()
 
 // Train the network
-net.train(trainingData, {
+net.train(Tdata, {
   iterations: 5000, // Increase iterations for better training
   log: true,
   logPeriod: 100
@@ -55,7 +70,7 @@ function generateResponse(input) {
   return output;
 }
 
-// Example usage
+// // Example usage
 generateResponse("hello");
 generateResponse("how are you");
 generateResponse("what is your name");
@@ -75,7 +90,7 @@ net.fromJSON(JSON.parse(savedJson));
 const extendedTrainingData = [
   { input: "hello", output: "hi there" },
   { input: "how are you", output: "I am fine, thank you" },
-  { input: "what is your name", output: "I am an intelligent AI" },
+  { input: "what is your name", output: "I am an intelligent AI made by NotifyCode Inc. I go by the name of NezaAI." },
   { input: "tell me a joke", output: "Why don't scientists trust atoms? Because they make up everything!" },
   { input: "goodbye", output: "see you later" },
   { input: "what is the weather like", output: "I can't check the weather, but you can look outside!" },
