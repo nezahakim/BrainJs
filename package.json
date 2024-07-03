@@ -7,7 +7,11 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^4.20.0",
+    "@tensorflow/tfjs-node": "^4.20.0",
+    "@xenova/transformers": "^2.17.2",
     "brain.js": "^1.1.2",
+    "gpt-tfjs": "^0.0.5",
     "srt-parser-2": "^1.2.3"
   }
 }

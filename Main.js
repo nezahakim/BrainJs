@@ -14,6 +14,19 @@ const trainingData = [
   // Add more varied conversational data
 ];
 
+const Data = () =>{
+
+
+  const file = fs.readFileSync('./dataset.txt').split(",");
+  let trainD = []
+  var obj = {}
+    for(var i = 0; i < file.length; i++){
+      {input: file[i], output: file[i+1]}
+    }
+
+
+}
+
 // Train the network
 net.train(trainingData, {
   iterations: 5000, // Increase iterations for better training
